@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks.ts";
 import FormContainer from "../components/FormContainer";
 import { useLoginMutation } from "../slices/usersApiSlice.ts";
 import { setCredentials } from "../slices/authSlice.ts";
+import Loader from "../components/Loader";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const LoginScreen = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [login] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const { userInfo } = useAppSelector((state) => state.auth);
 
@@ -64,6 +65,12 @@ const LoginScreen = () => {
         <Button type="submit" variant="primary" className="mt-3">
           Sign In
         </Button>
+
+        {isLoading && (
+          <>
+            <Loader />
+          </>
+        )}
 
         <Row className="py-3">
           <Col>

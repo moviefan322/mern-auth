@@ -1,14 +1,5 @@
 import { apiSlice } from "./apiSlice";
-
-interface LogoutResponse {
-  message: string;
-}
-
-interface UserInfo {
-  _id: number;
-  username: string;
-  email: string;
-}
+import { LogoutResponse, UserInfo } from "../utils/interfaces";
 
 const USERS_URL = "/api/users";
 
