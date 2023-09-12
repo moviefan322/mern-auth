@@ -15,7 +15,7 @@ const LoginScreen = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [login, { isLoading, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const { userInfo } = useAppSelector((state) => state.auth);
 
