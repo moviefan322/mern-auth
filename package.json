@@ -5,10 +5,11 @@
   "type": "module",
   "main": "server/server.js",
   "scripts": {
-    "start": "concurrently \"npm i && node server/server.js\"  \"cd client && npm i && npm run build\"",
+    "start": "node server/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm run dev --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "npm run client-install && npm run client-build" 
   },
   "keywords": [],
   "author": "",
