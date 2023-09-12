@@ -9,7 +9,8 @@ import {
 import store from "./store.tsx";
 import { Provider } from "react-redux";
 import App from "./App.tsx";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import './scss/bootstrap.scss'
 import "./index.css";
 import HomeScreen from "./screens/HomeScreen.tsx";
 import LoginScreen from "./screens/LoginScreen.tsx";
