@@ -1,16 +1,40 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks.ts";
 import FormContainer from "../components/FormContainer";
+import { useLoginMutation } from "../slices/usersApiSlice.ts";
+import { setCredentials } from "../slices/authSlice.ts";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorText, setErrorText] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [login, { isLoading, error }] = useLoginMutation();
+
+  const { userInfo } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit");
+    try {
+      const res = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
+      navigate("/");
+    } catch (err: any) {
+      console.log(err?.data?.message || err.error);
+      setErrorText(err?.data?.message || err.error);
+    }
   };
 
   return (
@@ -47,6 +71,7 @@ const LoginScreen = () => {
           </Col>
         </Row>
       </Form>
+      {errorText && <p className="text-danger fw-bold">{errorText}</p>}
     </FormContainer>
   );
 };
