@@ -1,10 +1,11 @@
 import Header from './components/Header'
+import HomeScreen from './components/screens/Homescreen'
 
 function App() {
   return (
     <>
       <Header />
-      <h1 className="text-primary">Mern-AUTH</h1>
+      <HomeScreen />
     </>
   )
 }

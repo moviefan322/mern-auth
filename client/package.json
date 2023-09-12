@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "sass:build": "sass --no-source-map scss:css",
-    "sass:watch": "sass --no-source-map --watch scss:css",
+    "sass:build": "cd src/scss sass --no-source-map style.scss:style.css",
+    "sass:watch": "cd src/scss sass --no-source-map --watch src:scss:style",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -29,7 +29,9 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "less": "^4.2.0",
     "sass": "^1.66.1",
+    "stylus": "^0.60.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   }
