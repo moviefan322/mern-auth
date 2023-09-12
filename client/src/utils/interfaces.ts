@@ -14,4 +14,11 @@ interface RegisterInfo {
   name: string;
 }
 
-export type { LogoutResponse, UserInfo, RegisterInfo };
+interface UpdateInfo {
+  _id: string;
+  email?: string;
+  password?: string;
+  name?: string;
+}
+
+export type { LogoutResponse, UserInfo, RegisterInfo, UpdateInfo };
