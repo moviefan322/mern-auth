@@ -9,12 +9,14 @@ import {
 import App from "./App.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import HomeScreen from "./components/screens/Homescreen.tsx";
+import HomeScreen from "./screens/HomeScreen.tsx";
+import LoginScreen from "./screens/LoginScreen.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
+      <Route path="/login" element={<LoginScreen />} />
     </Route>
   )
 );
