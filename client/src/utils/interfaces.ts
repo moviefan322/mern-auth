@@ -8,4 +8,10 @@ interface UserInfo {
   email: string;
 }
 
-export type { LogoutResponse, UserInfo };
+interface RegisterInfo {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export type { LogoutResponse, UserInfo, RegisterInfo };

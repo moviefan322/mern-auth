@@ -1,17 +1,49 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks.ts";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
+import Loader from "../components/Loader";
+import { useRegisterMutation } from "../slices/usersApiSlice.ts";
+import { setCredentials } from "../slices/authSlice.ts";
 
 const RegisterScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorText, setErrorText] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { userInfo } = useAppSelector((state) => state.auth);
+
+  const [register, { isLoading }] = useRegisterMutation();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit");
+    if (password !== confirmPassword) {
+      setErrorText("Passwords do not match");
+      return;
+    } else {
+      try {
+        console.log({ name, email, password });
+        const res = await register({ name, email, password }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate("/");
+      } catch (err: any) {
+        console.log(err);
+        setErrorText(err?.data?.message || err.error);
+      }
+    }
   };
 
   return (
@@ -19,7 +51,7 @@ const RegisterScreen = () => {
       <h1>Sign Up</h1>
 
       <Form onSubmit={submitHandler}>
-      <Form.Group controlId="text" className="my-2">
+        <Form.Group controlId="text" className="my-2">
           <Form.Label>Name Address</Form.Label>
           <Form.Control
             type="name"
@@ -56,6 +88,8 @@ const RegisterScreen = () => {
           ></Form.Control>
         </Form.Group>
 
+        {isLoading && <Loader />}
+
         <Button type="submit" variant="primary" className="mt-3">
           Sign Up
         </Button>
@@ -66,6 +100,7 @@ const RegisterScreen = () => {
           </Col>
         </Row>
       </Form>
+      {errorText && <p className="text-danger fw-bold">{errorText}</p>}
     </FormContainer>
   );
 };
